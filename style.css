@@ -79,4 +79,23 @@ span.coords {
   background: #ffc600;
 }
 
+/* Dysplay */
 
+.tile {
+	background-color:#FF6633;
+}
+
+.tile {
+	text-align: center;
+}
+
+/*.tile div {
+	list-style-type: none;
+}*/
+
+.second {
+	float:left;
+	margin-top:50px;
+	margin-left:50px;
+	margin-right:50px;
+}

@@ -53,6 +53,27 @@ async function weatherCheck(city = 'London', country = 'GB', select = '2'){
 }
 weatherCheck('Wroclaw', 'PL').then(obj => console.log(obj));
 
+//Displaying for Wrocław
+
+function displayWeather(obj){
+	const el = document.createElement("div");
+	el.setAttribute("class", "tile");
+//	el.id = "myDiv";
+	el.innerHTML = `
+		<h3>${obj.city}, ${obj.country}</h3>
+			<div>${obj.first[0]}<br>${obj.first[1]}, ${obj.first[2]}, ${obj.first[3]}</div>
+			<div class="second">${obj.second[0]}<br>${obj.second[1]}<br>${obj.second[2]}<br>${obj.second[3]}</div>
+			<div class="second">${obj.third[0]}<br>${obj.third[1]}<br>${obj.third[2]}<br>${obj.third[3]}</div>
+			<div class="second">${obj.fourth[0]}<br>${obj.fourth[1]}<br>${obj.fourth[2]}<br>${obj.fourth[3]}</div>
+			<div style="clear:both;"></div>
+	`;
+//	el.classList.add("module");
+	const div = document.querySelector("body");
+	div.appendChild(el);
+}
+
+weatherCheck('Wroclaw', 'PL').then(obj => displayWeather(obj));
+
 //Search bar 
 const endpoint = 'https://raw.githubusercontent.com/mkolodziej19/Weather/master/city.list.min.json';
 
