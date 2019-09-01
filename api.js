@@ -77,11 +77,18 @@ weatherCheck('Wroclaw', 'PL').then(obj => displayWeather(obj));
 //Search bar 
 const endpoint = 'https://raw.githubusercontent.com/mkolodziej19/Weather/master/city.list.min.json';
 
-const cities = [];
+let citiesAll = [];
+let cities = []
 
-fetch(endpoint)
-	.then(blob => blob.json())
-	.then(data => cities.push(...data))
+async function filtering(){
+	await fetch(endpoint)
+		.then(blob => blob.json())
+		.then(data => citiesAll.push(...data));
+	cities = citiesAll.filter(place => place.country==="PL");
+//	console.log(cities);
+}
+
+filtering();
 
 function findMatches(wordToMatch, cities) {
 	return cities.filter(place => {
@@ -122,7 +129,10 @@ const suggestions = document.querySelector('.suggestions');
 searchInput.addEventListener('change', displayMatches);
 searchInput.addEventListener('keyup', displayMatches);
 
-
+/*async function pisz(){
+	console.log(cities);
+}
+pisz();*/
 
 
 
