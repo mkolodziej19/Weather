@@ -51,21 +51,67 @@ async function weatherCheck(city = 'London', country = 'GB', select = '2'){
     }
     return weatherData;
 }
-weatherCheck('Wroclaw', 'PL').then(obj => console.log(obj));
+//weatherCheck('Wroclaw', 'PL').then(obj => console.log(obj));
 
 //Displaying for Wrocław
+
+function displayTime(v){
+	let today = new Date
+	let month = today.getMonth()+1;
+	let day = today.getDate();
+	let nextDay = day+1
+	if (month<10) month = "0"+month;
+	if (day<10) day = "0"+day;
+	if (nextDay<10) nextDay = "0"+nextDay;
+	if (today.getFullYear()==[v[0],v[1],v[2],v[3]].join('') && month==[v[5],v[6]].join('')){
+		if(day==[v[8],v[9]].join('')){
+			return 'Today, '+[v[11],v[12],v[13],v[14],v[15]].join('');
+		}
+		else if(nextDay==[v[8],v[9]].join('')){
+			return 'Tomorrow, '+[v[11],v[12],v[13],v[14],v[15]].join('');
+		}
+		else {
+			return v;
+		} 
+	}
+}
+
+function displayTemp(value,degrees){
+  switch(degrees){
+		case 'C':
+      return Math.round(value-273.15)+'°C';
+		case 'F':
+			return Math.round((9/5)*(value-273.15)+32)+'°F'; // wzór na podstawie Wikipedii, ale tam był tylko przelicznik z C.
+		default:
+			console.log('Wrong degrees argument (should be "C" or "F"');
+			break;
+	}
+}
+
+function displayPres(value){
+	return Math.round(value)+' hPa';
+}
 
 function displayWeather(obj){
 	const el = document.createElement("div");
 	el.setAttribute("class", "tile");
 //	el.id = "myDiv";
 	el.innerHTML = `
-		<h3>${obj.city}, ${obj.country}</h3>
-			<div>${obj.first[0]}<br>${obj.first[1]}, ${obj.first[2]}, ${obj.first[3]}</div>
-			<div class="second">${obj.second[0]}<br>${obj.second[1]}<br>${obj.second[2]}<br>${obj.second[3]}</div>
-			<div class="second">${obj.third[0]}<br>${obj.third[1]}<br>${obj.third[2]}<br>${obj.third[3]}</div>
-			<div class="second">${obj.fourth[0]}<br>${obj.fourth[1]}<br>${obj.fourth[2]}<br>${obj.fourth[3]}</div>
-			<div style="clear:both;"></div>
+		<h3>${obj.city}<!--, ${obj.country}--></h3>
+		<div class="first">
+			${displayTime(obj.first[0])} <br> ${displayTemp(obj.first[1],'C')}, ${displayPres(obj.first[2])}, ${obj.first[3]}
+		</div>
+		<div class="second">
+			${displayTime(obj.second[0])} <br> ${displayTemp(obj.second[1],'F')} <br> ${displayPres(obj.second[2])} <br> ${obj.second[3]}
+		</div>
+		<div class="second">
+			${displayTime(obj.third[0])} <br> ${displayTemp(obj.third[1],'C')} <br> ${displayPres(obj.third[2])} <br> ${obj.third[3]}
+		</div>
+		<div class="second">
+			${displayTime(obj.fourth[0])} <br> ${displayTemp(obj.fourth[1],'F')} <br> ${displayPres(obj.fourth[2])} <br> ${obj.fourth[3]}
+		</div>
+		<div style="clear:both;">
+		</div>
 	`;
 //	el.classList.add("module");
 	const div = document.querySelector("body");
@@ -114,6 +160,7 @@ function displayMatches() {
 	else if (htmlArray.length>0){
 		const html=htmlArray.join('');
 		suggestions.innerHTML=html;
+		clickAdding(); // 
 	} 
 	else {
 		suggestions.innerHTML='<li style="color:#d00;">No results</li>';
@@ -123,14 +170,19 @@ function displayMatches() {
 const searchInput = document.querySelector('.search');
 const suggestions = document.querySelector('.suggestions');
 
-searchInput.addEventListener('change', displayMatches);
+//searchInput.addEventListener('change', displayMatches);
 searchInput.addEventListener('keyup', displayMatches);
 
-/*async function pisz(){
-	console.log(cities);
-}
-pisz();*/
+let li = [];
 
+function clickAdding(){
+	li = suggestions.querySelectorAll('li');
+	li.forEach(item => item.addEventListener('click', clickFunction));
+}
+
+function clickFunction(){
+	console.log(this);
+}
 
 
 
