@@ -92,14 +92,14 @@ filtering();
 
 function findMatches(wordToMatch, cities) {
 	return cities.filter(place => {
-		const regex = new RegExp(wordToMatch, 'gi');
-		return place.name.match(regex) || place.country.match(regex);
+		return place.name.toLowerCase().match(wordToMatch.toLowerCase());
 	});
 }
 
 function displayMatches() {
 	const matchArray = findMatches(this.value, cities);
 	const htmlArray = matchArray.map(place => {
+//		const cityName = place.name.replace(this.value, `<span class="hl">${this.value}</span>`);
 		return `
 			<li>
 				<span class="name">${place.name}, ${place.country}</span>
@@ -107,19 +107,12 @@ function displayMatches() {
 			</li>
 		`;
 	});
-//	console.log(htmlArray.length);
-	if (htmlArray.length===209579){
-		suggestions.innerHTML='';
-	}
-	else if (htmlArray.length>1000){
-		suggestions.innerHTML='<li style="color:#d00;">To many results</li>';
-	}
-	else if (htmlArray.length>0){
+//	console.log(this.value.length);
+	if (this.value.length>=3){
 		const html=htmlArray.join('');
 		suggestions.innerHTML=html;
-	}
-	else {
-		suggestions.innerHTML='<li style="color:#d00;">No results</li>';
+	} else {
+		suggestions.innerHTML='';
 	}
 }
 
