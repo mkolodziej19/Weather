@@ -108,11 +108,15 @@ function displayMatches() {
 		`;
 	});
 //	console.log(this.value.length);
-	if (this.value.length>=3){
+	if (this.value.length<3){
+		suggestions.innerHTML='';
+	}	
+	else if (htmlArray.length>0){
 		const html=htmlArray.join('');
 		suggestions.innerHTML=html;
-	} else {
-		suggestions.innerHTML='';
+	} 
+	else {
+		suggestions.innerHTML='<li style="color:#d00;">No results</li>';
 	}
 }
 
