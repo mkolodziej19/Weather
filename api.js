@@ -7,7 +7,7 @@ async function currentWeatherCall(city){
 }
 
 async function forecastWeatherCall(city, country){
-    let apiSite = `http://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&appid=8a615664a0840a23b03c4418f16b9b13`;
+    let apiSite = `https://api.openweathermap.org/data/2.5/forecast?q=${city},${country}&appid=8a615664a0840a23b03c4418f16b9b13`;
     let response = await fetch(apiSite);
     let data = await response.json();
     return data;
