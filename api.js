@@ -26,20 +26,22 @@ async function weatherCheck(city = 'London', country = 'GB', select = '2'){
                     cloud: data.weather[0].description,
                     pres: data.main.pressure
                 };
-                //console.log(data);
                 return info;
             });
             break;
         case '2':
             //Each 3 hour timestamp weather access
             weatherData = await forecastWeatherCall(city, country).then(data =>{
+				let currTime = data.list[0].dt_txt;
+				currTime = parseInt(currTime[11] + currTime[12]);
+				let i = 13 - currTime/3;
                 let info = {
 					city: data.city.name,
 					country: data.city.country,
-					first: [data.list[0].dt_txt, data.list[0].main.temp, data.list[0].main.pressure, data.list[0].weather[0].description],
-					second: [data.list[1].dt_txt, data.list[1].main.temp, data.list[1].main.pressure, data.list[1].weather[0].description],
-					third: [data.list[2].dt_txt, data.list[2].main.temp, data.list[2].main.pressure, data.list[2].weather[0].description],
-					fourth: [data.list[3].dt_txt, data.list[3].main.temp, data.list[3].main.pressure, data.list[3].weather[0].description]
+					first: [data.list[i].dt_txt, data.list[i].main.temp, data.list[i].main.pressure, data.list[i].weather[0].description],
+					second: [data.list[i + 8].dt_txt, data.list[i + 8].main.temp, data.list[i + 8].main.pressure, data.list[i + 8].weather[0].description],
+					third: [data.list[i + 16].dt_txt, data.list[i + 16].main.temp, data.list[i + 16].main.pressure, data.list[i + 16].weather[0].description],
+					fourth: [data.list[i + 24].dt_txt, data.list[i + 24].main.temp, data.list[i + 24].main.pressure, data.list[i + 24].weather[0].description]
                 };
                 //console.log(data);
                 return info;
@@ -51,10 +53,8 @@ async function weatherCheck(city = 'London', country = 'GB', select = '2'){
     }
     return weatherData;
 }
-//weatherCheck('Wroclaw', 'PL').then(obj => console.log(obj));
 
-//Displaying for Wrocław
-
+//Weather display functions
 function displayTime(v){
 	let today = new Date
 	let month = today.getMonth()+1;
@@ -104,24 +104,21 @@ function displayWeather(obj){
 		<div class="second">
 			${displayTime(obj.second[0])} <br> ${displayTemp(obj.second[1],'F')} <br> ${displayPres(obj.second[2])} <br> ${obj.second[3]}
 		</div>
-		<div class="second">
+		<div class="third">
 			${displayTime(obj.third[0])} <br> ${displayTemp(obj.third[1],'C')} <br> ${displayPres(obj.third[2])} <br> ${obj.third[3]}
 		</div>
-		<div class="second">
+		<div class="fourth">
 			${displayTime(obj.fourth[0])} <br> ${displayTemp(obj.fourth[1],'F')} <br> ${displayPres(obj.fourth[2])} <br> ${obj.fourth[3]}
 		</div>
 		<div style="clear:both;">
 		</div>
 	`;
-//	el.classList.add("module");
 	const div = document.querySelector("body");
 	div.appendChild(el);
 }
 
-weatherCheck('Wroclaw', 'PL').then(obj => displayWeather(obj));
-
 //Search bar 
-const endpoint = 'https://raw.githubusercontent.com/mkolodziej19/Weather/master/city.list.min.json';
+const endpoint = 'city.list.min.json';
 
 let citiesAll = [];
 let cities = []
@@ -131,7 +128,7 @@ async function filtering(){
 		.then(blob => blob.json())
 		.then(data => citiesAll.push(...data));
 	cities = citiesAll.filter(place => place.country==="PL");
-//	console.log(cities);
+	//console.log(cities);
 }
 
 filtering();
@@ -145,15 +142,14 @@ function findMatches(wordToMatch, cities) {
 function displayMatches() {
 	const matchArray = findMatches(this.value, cities);
 	const htmlArray = matchArray.map(place => {
-//		const cityName = place.name.replace(this.value, `<span class="hl">${this.value}</span>`);
 		return `
 			<li>
-				<span class="name">${place.name}, ${place.country}</span>
-				<span class="coords">lon: ${place.coord.lon} <br> lat: ${place.coord.lat}</span>
+				<span class="name">${place.name}</span> 
+				<span class="country">${place.country}</span>
+				<div class="coords">${place.coord.lon}<br>${place.coord.lat}</div>
 			</li>
 		`;
 	});
-//	console.log(this.value.length);
 	if (this.value.length<3){
 		suggestions.innerHTML='';
 	}	
@@ -173,39 +169,21 @@ const suggestions = document.querySelector('.suggestions');
 //searchInput.addEventListener('change', displayMatches);
 searchInput.addEventListener('keyup', displayMatches);
 
-let li = [];
-
+//Get arguments from clicked elements
 function clickAdding(){
 	li = suggestions.querySelectorAll('li');
-	li.forEach(item => item.addEventListener('click', clickFunction));
+	li.forEach(item => item.addEventListener('click', getCity));
 }
 
-function clickFunction(){
-	console.log(this);
+function getCity(e){
+	let city = e.currentTarget.getElementsByClassName('name');
+	city = city[0].innerText;
+	let country = e.currentTarget.getElementsByClassName('country');
+	country = country[0].innerText;
+	console.log(e);
+	console.log(country);
+	weatherCheck(city, country).then(obj => displayWeather(obj));
+	searchInput.value = "";
+	li = suggestions.querySelectorAll('li');
+	li.forEach(item => suggestions.removeChild(item));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
