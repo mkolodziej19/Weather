@@ -118,9 +118,7 @@ function displayWeather(obj){
 }
 
 //Search bar 
-const endpoint = 'https://raw.githubusercontent.com/mkolodziej19/Weather/master/city.list.min.json';
-//Przed wysłaniem zmienić powyższą linijkę na poniższą.
-// const endpoint = 'city.list.min.json';
+const endpoint = 'city.list.min.json';
 
 let citiesAll = [];
 let cities = []
