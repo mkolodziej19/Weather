@@ -1,26 +1,37 @@
-<!doctype html>
-
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-
-	<title>Weather app</title>
-
-  <link rel="stylesheet" href="style.css">
-
-</head>
-
-<body>
-
-<!--	<h1>Weather.</h1> -->
-  <form class="search-form">
-    <input type="text" class="search" id="search-bar" placeholder="Enter name">
-    <ul class="suggestions">
-      <li>Filter for a city</li>
-      <li>or a country</li>
-    </ul>
-  </form>
-
-  <script src="api.js"></script>
-</body>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+    <link rel='stylesheet' type='text/css' href='style.css' media='screen'>
+    <link rel="stylesheet" type='text/css' href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="search-box">
+      <input class="search-bar" type="text" placeholder="Search...">
+      <div class="search"></div>
+      <ul class="suggestions">
+      </ul>
+    </div>
+    <div class="weather">
+      <div class="top">
+        <div class="city">
+          <span><i class="fas fa-map-marker-alt"></i> Wrocław</span>
+        </div>
+        <div class="temp">
+          <div class="current">21°</div>
+          <div class="minmax"><i class="fas fa-cloud-sun"></i><span>27°</span><span>14°</span></div>
+        </div>
+      </div>
+      <div class="bottom">
+        <span class="more">
+          More
+        </span>
+        <span class="forecast">
+          Forecast
+        </span>
+      </div>
+    </div>
+    <script src="api.js"></script>
+  </body>
 </html>
