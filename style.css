@@ -1,51 +1,199 @@
-html {
-  box-sizing: border-box;
-/*  background: #ffc600;*/
-  background: #770;
-  font-family: 'helvetica neue';
-  font-size: 20px;
-  font-weight: 200;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-h1 {
-	text-align: center;
-	color: white;
-}
-
-input {
-  width: 100%;
-  padding: 20px;
-}
-
-.search-form {
-  max-width: 400px;
-  margin: 50px auto;
-}
-
-input.search {
+/*Global definisions*/
+* {
   margin: 0;
-  text-align: center;
-  outline: 0;
-  border: 10px solid #F7F7F7;
-  width: 120%;
-  left: -10%;
-  position: relative;
-  top: 10px;
-  z-index: 2;
-  border-radius: 5px;
-  font-size: 40px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.19);
+  padding: 0;
+  box-sizing: border-box;
+}  
+html, body {
+  width: 100vw;
+  height: 100vh;
+}
+html{
+  background-image: linear-gradient(135deg, rgba(255, 160, 122, .4), rgba(180, 180, 180, .4));
 }
 
+/*Search-bar*/
+.search-box{
+  position: relative;
+  margin: auto;
+  top: 10%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  height: 100px;
+}
+.search-box .search {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background: rgb(243, 123, 169);
+  border-radius: 50%;
+  transition: all 1s;
+  z-index: 4;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.4);
+}
+.search-box .search:hover{
+  cursor: pointer;
+}
+.search-box .search::before{
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: 22px;
+  right: 0;
+  bottom: 0;
+  left: 22px;
+  width: 12px;
+  height: 2px;
+  background: white;
+  transform: rotate(45deg);
+  transition: all .5s;
+}
+.search-box .search::after{
+  content: "";
+  position: absolute;
+  margin: auto;
+  top: -5px;
+  right: 0;
+  bottom: 0;
+  left: -5px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid white;
+  transition: all .5s;
+}
+.search-bar{
+  font-family: monospace;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 35px;
+  height: 35px;
+  outline: none;
+  border: none;
+  background: rgb(243, 123, 169);
+  color: white;
+  text-shadow: 0 0 10px rgb(243, 123, 169);
+  padding: 0 80px 0 20px;
+  border-radius: 30px;
+  box-shadow: 0 20px 25px 0 rgba(0, 0, 0, 0.2);
+  transition: all 1s;
+  opacity: 0;
+  z-index: 5;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+}
+.search-bar:hover{
+  cursor: pointer;
+}
+.search-bar:focus {
+  width: 300px;
+  opacity: 1;
+  cursor: text;
+}
+.search-bar:focus ~ .search{
+  right: -250px;
+  background: white;
+  z-index: 6;
+}
+.search-bar:focus ~ .search::before{
+  top: 0;
+  left: 0;
+  width: 25px;
+  background: rgb(243, 123, 169);
+}
+.search-bar:focus ~ .search::after{
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 2px;
+  border: none;
+  background: rgb(243, 123, 169);
+  border-radius: 0%;
+  transform: rotate(-45deg);
+}
+.search-bar::placeholder{
+  color: white;
+  opacity: 0.5;
+  font-weight: bolder;
+}
+
+/*Weather block display*/
+.weather{
+  position: absolute;
+  margin: auto;
+  top: 18%;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 50%;
+  height: 60%;
+  background-image: url(img/taiwan.jpg);
+  background-size: cover;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.8);
+  border-radius: 25px;
+}
+.weather .top{
+  border-radius: 25px 25px 0 0; 
+  position: relative;
+  width: 100%;
+  height: 75%;
+  background-color: rgba(180, 180, 180, 0.3);
+}
+.weather .top .city{
+  position: absolute;
+  left: 40px;
+  top: 40px;
+  font-size: 25px;
+  font-family: sans-serif;
+}
+.weather .top .temp{
+  position: absolute;
+  left:40px;
+  bottom: 40px;
+  font-size: 120px;
+  bottom: 20px;
+}
+.weather .top .minmax{
+  font-size: 30px;
+}
+.weather .top .minmax span{
+  margin-right: 10px;
+}
+.weather .bottom{
+  display: flex;
+  border-radius:  0 0 25px 25px; 
+  position: relative;
+  width: 100%;
+  height: 25%;
+  background-color: rgba(180, 180, 180, 0.5);
+}
+.weather .bottom span{
+  padding: 10px;
+}
+.weather .bottom .more{
+  height: 100%;
+  width: 25%;
+  background-color: rgba(180, 180, 180, 0.3);
+  border-radius:  0 0 0 25px; 
+}
+
+
+/*rest*/
 .suggestions {
   margin: 0;
   padding: 0;
   position: relative;
-  /*perspective: 20px;*/
 }
 
 .suggestions li {
@@ -75,10 +223,6 @@ span.coords {
   font-size: 15px;
 }
 
-.hl {
-  background: #ffc600;
-}
-
 /* Dysplay */
 
 .tile {
@@ -88,10 +232,6 @@ span.coords {
 .tile {
 	text-align: center;
 }
-
-/*.tile div {
-	list-style-type: none;
-}*/
 
 .second, .third, .fourth {
 	float:left;

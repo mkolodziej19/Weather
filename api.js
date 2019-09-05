@@ -95,7 +95,6 @@ function displayPres(value){
 function displayWeather(obj){
 	const el = document.createElement("div");
 	el.setAttribute("class", "tile");
-//	el.id = "myDiv";
 	el.innerHTML = `
 		<h3>${obj.city}<!--, ${obj.country}--></h3>
 		<div class="first">
@@ -163,7 +162,7 @@ function displayMatches() {
 	}
 }
 
-const searchInput = document.querySelector('.search');
+const searchInput = document.querySelector('.search-bar');
 const suggestions = document.querySelector('.suggestions');
 
 //searchInput.addEventListener('change', displayMatches);
