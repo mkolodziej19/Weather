@@ -71,7 +71,7 @@ function displayTime(v){
 			return 'Tomorrow, '+[v[11],v[12],v[13],v[14],v[15]].join('');
 		}
 		else {
-			return v;
+			return [v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8],v[9],v[10],v[11],v[12],v[13],v[14],v[15]].join('');
 		} 
 	}
 }
@@ -118,7 +118,9 @@ function displayWeather(obj){
 }
 
 //Search bar 
-const endpoint = 'city.list.min.json';
+const endpoint = 'https://raw.githubusercontent.com/mkolodziej19/Weather/master/city.list.min.json';
+//Przed wysłaniem zmienić powyższą linijkę na poniższą.
+// const endpoint = 'city.list.min.json';
 
 let citiesAll = [];
 let cities = []
