@@ -63,7 +63,7 @@ async function weatherCheck(city, country){
 }
 
 //Search bar display
-const endpoint = 'city.list.min.json';
+const endpoint = 'json/city.list.min.json';
 let citiesAll = [];
 let cities = [];
 
@@ -148,81 +148,38 @@ async function getCity(e){
 
 }
 
-function displayData(){
-	const box = document.createElement('div');
-	box.setAttribute('class', 'weather-box');
-	box.innerHTML = `
+function getWeekDay(d){
+	const year = [d[0], d[1], d[2], d[3]].join('');
+	const month = [d[5], d[6]].join('');
+	const day = [d[8], d[9]].join('');
 
-		<div class="top">
-			<div class="city">
-				<span><i class="fas fa-map-marker-alt"></i> ${selectedCities[0].city}</span>
-			</div>
-			<div class="temp">
-				<div class="current">${displayTemp(selectedCities[0].currData.temp, 'C')}</div>
-				<div class="minmax"><i class="fas fa-cloud-sun"></i><span>${displayTemp(selectedCities[0].currData.max, 'C')}</span><span>${displayTemp(selectedCities[0].currData.min, 'C')}</span></div>
-			</div>
-		</div>
-		<div class="bottom">
-			<span class="more">
-				<span>${selectedCities[0].currData.pres} hPa</span>
-				<span>${selectedCities[0].currData.wind}</span>
-				<span>${selectedCities[0].currData.cloud}</span>
-			</span>
-			<span class="forecast">
-				<div>
-					${selectedCities[0].forecastData.day1[0]}<br>
-					${selectedCities[0].forecastData.day1[1]}<br>
-					${selectedCities[0].forecastData.day1[2]}
-				</div>
-				<div>
-					${selectedCities[0].forecastData.day2[0]}<br>
-					${selectedCities[0].forecastData.day2[1]}<br>
-					${selectedCities[0].forecastData.day2[2]}
-				</div>
-				<div>
-					${selectedCities[0].forecastData.day3[0]}<br>
-					${selectedCities[0].forecastData.day3[1]}<br>
-					${selectedCities[0].forecastData.day3[2]}
-				</div>
-				<div>
-					${selectedCities[0].forecastData.day4[0]}<br>
-					${selectedCities[0].forecastData.day4[1]}<br>
-					${selectedCities[0].forecastData.day4[2]}
-				</div>
-			</span>
-		</div>
-	
-	`
-	const slider = document.querySelector('.slider');
-	slider.appendChild(box);
+	const date = new Date(year, month, day);
+	let dayOfWeek = date.getDay();
+
+	switch(dayOfWeek){
+		case 0: 
+			return 'Sun';
+		case 1:
+			return 'Mon';
+		case 2:
+			return 'Tue';
+		case 3:
+			return 'Wed';
+		case 4:
+			return 'Thu';
+		case 5:
+			return 'Fri';
+		case 6:
+			return 'Sat';
+		default:
+			console.log('Wrong date argument');
+	};
 }
 
-//OLD DISPLAY
-function displayTime(v){
-	let today = new Date
-	let month = today.getMonth()+1;
-	let day = today.getDate();
-	let nextDay = day+1
-	if (month<10) month = "0"+month;
-	if (day<10) day = "0"+day;
-	if (nextDay<10) nextDay = "0"+nextDay;
-	if (today.getFullYear()==[v[0],v[1],v[2],v[3]].join('') && month==[v[5],v[6]].join('')){
-		if(day==[v[8],v[9]].join('')){
-			return 'Today, '+[v[11],v[12],v[13],v[14],v[15]].join('');
-		}
-		else if(nextDay==[v[8],v[9]].join('')){
-			return 'Tomorrow, '+[v[11],v[12],v[13],v[14],v[15]].join('');
-		}
-		else {
-			return [v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8],v[9],v[10],v[11],v[12],v[13],v[14],v[15]].join('');
-		} 
-	}
-}
-
-function displayTemp(value,degrees){
-  switch(degrees){
+function getTemp(value,degrees){
+	switch(degrees){
 		case 'C':
-      return Math.round(value-273.15)+'°';
+			return Math.round(value-273.15)+'°';
 		case 'F':
 			return Math.round((9/5)*(value-273.15)+32)+'°';
 		default:
@@ -231,30 +188,64 @@ function displayTemp(value,degrees){
 	}
 }
 
-function displayPres(value){
-	return Math.round(value)+' hPa';
+function getIcon(){
+	return `<i class="fas fa-sun"></i>`
 }
 
-function displayWeather(obj){
-	const el = document.createElement("div");
-	el.setAttribute("class", "tile");
-	el.innerHTML = `
-		<h3>${obj.city}<!--, ${obj.country}--></h3>
-		<div class="first">
-			${displayTime(obj.first[0])} <br> ${displayTemp(obj.first[1],'C')}, ${displayPres(obj.first[2])}, ${obj.first[3]}
+function displayData(){
+	const box = document.createElement('div');
+	box.setAttribute('class', 'weather-box');
+	box.innerHTML = `
+
+		<div class="top">
+			<div class="cross">
+			</div>
+			<div class="city">
+				<span><i class="fas fa-map-marker-alt"></i> <span class='city-name'>${selectedCities[0].city}</span></span>
+			</div>
+			<div class="temp">
+				<div class="current">${getTemp(selectedCities[0].currData.temp, 'C')}</div>
+				<div class="minmax">${getIcon(selectedCities[0].currData.cloud)} <span>${getTemp(selectedCities[0].currData.min, 'C')}</span><span>${getTemp(selectedCities[0].currData.max, 'C')}</span></div>
+			</div>
 		</div>
-		<div class="second">
-			${displayTime(obj.second[0])} <br> ${displayTemp(obj.second[1],'F')} <br> ${displayPres(obj.second[2])} <br> ${obj.second[3]}
+		<div class="bottom">
+			<span class="more">
+				<span>${selectedCities[0].currData.pres} hPa</span>
+				<span><i class="fas fa-wind"></i> ${selectedCities[0].currData.wind}</span>
+			</span>
+			<span class="forecast">
+				<div>
+					<span>${getIcon(selectedCities[0].forecastData.day1[2])}</span>
+					<span>${getWeekDay(selectedCities[0].forecastData.day1[0])}</span>
+					<span>${getTemp(selectedCities[0].forecastData.day1[1], 'C')}</span>
+				</div>
+				<div>
+					<span>${getIcon(selectedCities[0].forecastData.day2[2])}</span>
+					<span>${getWeekDay(selectedCities[0].forecastData.day2[0])}</span>
+					<span>${getTemp(selectedCities[0].forecastData.day2[1], 'C')}</span>
+				</div>
+				<div>
+					<span>${getIcon(selectedCities[0].forecastData.day3[2])}</span>
+					<span>${getWeekDay(selectedCities[0].forecastData.day3[0])}</span>
+					<span>${getTemp(selectedCities[0].forecastData.day3[1], 'C')}</span>
+				</div>
+				<div>
+					<span>${getIcon(selectedCities[0].forecastData.day4[2])}</span>
+					<span>${getWeekDay(selectedCities[0].forecastData.day4[0])}</span>
+					<span>${getTemp(selectedCities[0].forecastData.day4[1], 'C')}</span>
+				</div>
+			</span>
 		</div>
-		<div class="third">
-			${displayTime(obj.third[0])} <br> ${displayTemp(obj.third[1],'C')} <br> ${displayPres(obj.third[2])} <br> ${obj.third[3]}
-		</div>
-		<div class="fourth">
-			${displayTime(obj.fourth[0])} <br> ${displayTemp(obj.fourth[1],'F')} <br> ${displayPres(obj.fourth[2])} <br> ${obj.fourth[3]}
-		</div>
-		<div style="clear:both;">
-		</div>
-	`;
-	const div = document.querySelector("body");
-	div.appendChild(el);
+	
+	`
+	const slider = document.querySelector('.slider');
+	slider.appendChild(box);
+	const cross = box.querySelector('.cross');
+	cross.addEventListener('click', (e) => {
+		const tab = e.target.parentNode.parentNode;
+		const name = tab.querySelector('.city-name').innerText;
+		tab.parentNode.removeChild(tab);
+		selectedCities = selectedCities.filter(obj => obj.city !== name)
+		console.log(selectedCities);
+	});
 }

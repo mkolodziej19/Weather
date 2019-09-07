@@ -2,38 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>title</title>
-    <link rel='stylesheet' type='text/css' href='style.css' media='screen'>
-    <link rel="stylesheet" type='text/css' href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <title>Weather app</title>
+    <link rel='stylesheet' type='text/css' href='css/style.css'>
+    <script src="https://kit.fontawesome.com/c190bf0a9f.js"></script>
   </head>
   <body>
     <div class="search-box">
       <input class="search-bar" type="text" placeholder="Search...">
       <div class="search"></div>
-      <ul class="suggestions">
-      </ul>
+      <ul class="suggestions"></ul>
     </div>
-    <div class="slider">
-      <div class="weather-box">
-        <div class="top">
-          <div class="city">
-            <span><i class="fas fa-map-marker-alt"></i> Wrocław</span>
-          </div>
-          <div class="temp">
-            <div class="current">21°</div>
-            <div class="minmax"><i class="fas fa-cloud-sun"></i><span>27°</span><span>14°</span></div>
-          </div>
-        </div>
-        <div class="bottom">
-          <span class="more">
-            More
-          </span>
-          <span class="forecast">
-            Forecast
-          </span>
-        </div>
-      </div>
-    </div>
-    <script src="api.js"></script>
+    <div class="slider"></div>
+    <script src="js/api.js"></script>
   </body>
 </html>
