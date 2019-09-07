@@ -63,7 +63,8 @@ async function weatherCheck(city, country){
 }
 
 //Search bar display
-const endpoint = 'city.list.min.json';
+const endpoint = 'https://raw.githubusercontent.com/mkolodziej19/Weather/master/city.list.min.json';
+//const endpoint = 'city.list.min.json';
 let citiesAll = [];
 let cities = [];
 
@@ -152,7 +153,7 @@ function displayData(){
 	const box = document.createElement('div');
 	box.setAttribute('class', 'weather-box');
 	box.innerHTML = `
-	<div class="weather-box">
+
 		<div class="top">
 			<div class="city">
 				<span><i class="fas fa-map-marker-alt"></i> ${selectedCities[0].city}</span>
@@ -191,7 +192,7 @@ function displayData(){
 				</div>
 			</span>
 		</div>
-	</div>
+	
 	`
 	const slider = document.querySelector('.slider');
 	slider.appendChild(box);
