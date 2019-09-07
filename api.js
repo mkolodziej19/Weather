@@ -63,8 +63,7 @@ async function weatherCheck(city, country){
 }
 
 //Search bar display
-const endpoint = 'https://raw.githubusercontent.com/mkolodziej19/Weather/master/city.list.min.json';
-//const endpoint = 'city.list.min.json';
+const endpoint = 'city.list.min.json';
 let citiesAll = [];
 let cities = [];
 
