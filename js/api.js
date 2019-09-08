@@ -3,6 +3,11 @@ const searchInput = document.querySelector('.search-bar');
 const suggestions = document.querySelector('.suggestions');
 let selectedCities = [];
 
+//Background color
+const hour = new Date().getHours();
+if(hour <= 6 || hour >= 22){
+	document.querySelector('html').style.backgroundImage = 'linear-gradient(135deg, rgba(5, 5, 5, 0.8), rgba(64, 64, 64, 0.8))';
+}
 
 //API functions
 async function currentWeatherCall(city){
@@ -77,8 +82,11 @@ async function filtering(){
 	//Filter for Poland cities only
 	await fetch(endpoint)
 		.then(blob => blob.json())
-		.then(data => citiesAll.push(...data));
-	cities = citiesAll.filter(place => place.country==="PL");
+		.then(data => {
+			data = data.filter(i => i.country === "PL")
+			citiesAll.push(...data);
+		});
+	cities = citiesAll;
 }
 
 filtering();
@@ -93,7 +101,7 @@ function findMatches(wordToMatch, cities) {
 function displayMatches() {
 	//Display data in li
 	const matchArray = findMatches(this.value, cities);
-	matchArray.splice(12, matchArray.length - 13);
+	matchArray.splice(13, matchArray.length - 14);
 	const htmlArray = matchArray.map(place => {
 		return `
 			<li>
@@ -116,14 +124,6 @@ function displayMatches() {
 }
 
 searchInput.addEventListener('keyup', displayMatches);
-searchInput.addEventListener('focusout', (e) => {
-	//Czyszczenie listy przy focusout powoduje że getCity nie ma argumentów,
-	//trzeba to jakoś sensownie rozwiązac żeby przy opuczczeniu searchbara
-	//znikała lista ale jednoczesnie getCity miał argumenty
-	//e.target.value = '';
-	// li = suggestions.querySelectorAll('li');
-	// li.forEach(item => suggestions.removeChild(item));
-});
 
 //Get arguments from clicked elements
 async function getCity(e){
@@ -199,18 +199,18 @@ function getIcon(description){
 	switch (description){
 		// Clouds
 		case 'clear sky':
-			return `<img class="icon" src="./icons/iconfinder_weather01_4102328.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather01_4102328.png" width="32px" height="32px">`;
 		case 'few clouds':
 		case 'few clouds: 11-25%':
-			return `<img class="icon" src="./icons/iconfinder_weather02_4102326.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather02_4102326.png" width="32px" height="32px">`;
 		case 'scattered clouds':
 		case 'scattered clouds: 25-50%':
-			return `<img class="icon" src="./icons/iconfinder_weather03_4102314.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather03_4102314.png" width="32px" height="32px">`;
 		case 'broken clouds':
 		case 'broken clouds: 51-84%':
 		case 'overcast clouds: 85-100%':
 		case 'overcast clouds':
-			return `<img class="icon" src="./icons/iconfinder_weather04_4102315.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather04_4102315.png" width="32px" height="32px">`;
 		// Rains
 		case 'light intensity drizzle':
 		case 'light intensity drizzle rain':
@@ -218,7 +218,7 @@ function getIcon(description){
 		case 'light intensity shower rain':
 		case 'drizzle':
 		case 'drizzle rain':
-			return `<img class="icon" src="./icons/iconfinder_weather05_4102316.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather05_4102316.png" width="32px" height="32px">`;
 		case 'shower rain':
 		case 'shower rain and drizzle':
 		case 'shower drizzle':
@@ -227,7 +227,7 @@ function getIcon(description){
 		case 'freezing rain':
 		case 'shower rain':
 		case 'ragged shower rain':
-			return `<img class="icon" src="./icons/iconfinder_weather06_4102317.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather06_4102317.png" width="32px" height="32px">`;
 		case 'heavy intensity drizzle':
 		case 'heavy intensity drizzle rain':
 		case 'heavy shower rain and drizzle':
@@ -235,36 +235,36 @@ function getIcon(description){
 		case 'very heavy rain':
 		case 'heavy intensity shower rain':
 		case 'extreme rain':
-			return `<img class="icon" src="./icons/iconfinder_weather07_4102320.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather07_4102320.png" width="32px" height="32px">`;
 		// Storms
 		case 'thunderstorm':
 		case 'light thunderstorm':
 		case 'heavy thunderstorm':
 		case 'ragged thunderstorm':
-			return `<img class="icon" src="./icons/iconfinder_weather09_4102319.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather09_4102319.png" width="32px" height="32px">`;
 		case 'thunderstorm with light rain':
 		case 'thunderstorm with rain':
 		case 'thunderstorm with heavy rain':
 		case 'thunderstorm with light drizzle':
 		case 'thunderstorm with drizzle':
 		case 'thunderstorm with heavy drizzle':
-			return `<img class="icon" src="./icons/iconfinder_weather08_4102318.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather08_4102318.png" width="32px" height="32px">`;
 		// Snows
 		case 'light snow':
 		case 'Light shower sleet':
 		case 'Light rain and snow':
 		case 'Light shower snow':
-			return `<img class="icon" src="./icons/iconfinder_weather11_4102327.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather11_4102327.png" width="32px" height="32px">`;
 		case 'snow':
 		case 'Snow':
 		case 'Shower sleet':
 		case 'Shower snow':
-			return `<img class="icon" src="./icons/iconfinder_weather12_4102322.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather12_4102322.png" width="32px" height="32px">`;
 		case 'Heavy snow':
 		case 'Heavy shower snow':
 		case 'Sleet':
 		case 'Rain and snow':
-			return `<img class="icon" src="./icons/iconfinder_weather13_4102323.png">`;
+			return `<img class="icon" src="./icons/iconfinder_weather13_4102323.png" width="32px" height="32px">`;
 		// Atmospheric - only description
 		case 'mist':
 		case 'Smoke':
@@ -300,7 +300,7 @@ function displayTab(i){
 		<div class="bottom">
 			<span class="more">
 				<span>${selectedCities[i].currData.pres} hPa</span>
-				<span><i class="fas fa-wind"></i> ${selectedCities[i].currData.wind}</span>
+				<span><i class="fas fa-wind"></i> ${selectedCities[i].currData.wind} m/s</span>
 			</span>
 			<span class="forecast">
 				<div>
@@ -327,6 +327,16 @@ function displayTab(i){
 		</div>
 	
 	`
+	if(selectedCities[i].city === 'Warsaw')
+		box.style.backgroundImage = 'url(../img/warszawa.jpg)';
+	if(selectedCities[i].city === 'Wroclaw')
+		box.style.backgroundImage = 'url(../img/wroclaw.jpg)';
+	if(selectedCities[i].city === 'Krakow')
+		box.style.backgroundImage = 'url(../img/krakow.jpg)';
+	if(selectedCities[i].city === 'Gdańsk')
+		box.style.backgroundImage = 'url(../img/gdansk.jpg)';
+	if(selectedCities[i].city === 'Poznań')
+		box.style.backgroundImage = 'url(../img/poznan.jpg)';
 	const slider = document.querySelector('.slider');
 	slider.appendChild(box);
 	const cross = box.querySelector('.cross');
@@ -345,8 +355,18 @@ function makeSlider(){
 	$(document).ready(function(){
 		$('.slider').slick({
 			centerMode: true,
-			centerPadding: '150px',
+			centerPadding: '300px',
 			slidesToShow: 1,
+			responsive: [
+				{
+				  breakpoint: 1024,
+				  settings: {
+					centerMode: true,
+					centerPadding: '150px',
+					slidesToShow: 1
+				  }
+				}
+			]
 		});
 	});
 }
