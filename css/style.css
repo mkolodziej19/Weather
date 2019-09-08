@@ -280,6 +280,25 @@ html{
   text-align: center;
 }
 
+.weather-box .minmax .icon{
+	width:80px;
+}
+
+.weather-box .forecast .icon{
+	width:60px;
+}
+
+footer{
+	text-align:center;
+	position:sticky;
+	top:95%;
+  font-family: sans-serif;
+	font-size:15px;
+	background-color: #bbf;
+	padding:10px;
+	z-index:-1;
+}
+
 /* Slider */
 /* .slick-active .top .city{
   font-size: 1.8rem;

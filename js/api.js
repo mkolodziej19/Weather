@@ -158,7 +158,11 @@ function getWeekDay(d){
 
 	const date = new Date(year, month, day);
 	let dayOfWeek = date.getDay();
-
+	if (dayOfWeek===0) {
+		dayOfWeek=6
+	} else {
+		dayOfWeek-=1;
+	}
 	switch(dayOfWeek){
 		case 0: 
 			return 'Sun';
@@ -191,8 +195,90 @@ function getTemp(value,degrees){
 	}
 }
 
-function getIcon(){
-	return `<img src='icons/sun.svg' width="40px" height="40px"></img>`
+function getIcon(description){
+	switch (description){
+		// Clouds
+		case 'clear sky':
+			return `<img class="icon" src="./icons/iconfinder_weather01_4102328.png">`;
+		case 'few clouds':
+		case 'few clouds: 11-25%':
+			return `<img class="icon" src="./icons/iconfinder_weather02_4102326.png">`;
+		case 'scattered clouds':
+		case 'scattered clouds: 25-50%':
+			return `<img class="icon" src="./icons/iconfinder_weather03_4102314.png">`;
+		case 'broken clouds':
+		case 'broken clouds: 51-84%':
+		case 'overcast clouds: 85-100%':
+		case 'overcast clouds':
+			return `<img class="icon" src="./icons/iconfinder_weather04_4102315.png">`;
+		// Rains
+		case 'light intensity drizzle':
+		case 'light intensity drizzle rain':
+		case 'light rain':
+		case 'light intensity shower rain':
+		case 'drizzle':
+		case 'drizzle rain':
+			return `<img class="icon" src="./icons/iconfinder_weather05_4102316.png">`;
+		case 'shower rain':
+		case 'shower rain and drizzle':
+		case 'shower drizzle':
+		case 'rain':
+		case 'moderate rain':
+		case 'freezing rain':
+		case 'shower rain':
+		case 'ragged shower rain':
+			return `<img class="icon" src="./icons/iconfinder_weather06_4102317.png">`;
+		case 'heavy intensity drizzle':
+		case 'heavy intensity drizzle rain':
+		case 'heavy shower rain and drizzle':
+		case 'heavy intensity rain':
+		case 'very heavy rain':
+		case 'heavy intensity shower rain':
+		case 'extreme rain':
+			return `<img class="icon" src="./icons/iconfinder_weather07_4102320.png">`;
+		// Storms
+		case 'thunderstorm':
+		case 'light thunderstorm':
+		case 'heavy thunderstorm':
+		case 'ragged thunderstorm':
+			return `<img class="icon" src="./icons/iconfinder_weather09_4102319.png">`;
+		case 'thunderstorm with light rain':
+		case 'thunderstorm with rain':
+		case 'thunderstorm with heavy rain':
+		case 'thunderstorm with light drizzle':
+		case 'thunderstorm with drizzle':
+		case 'thunderstorm with heavy drizzle':
+			return `<img class="icon" src="./icons/iconfinder_weather08_4102318.png">`;
+		// Snows
+		case 'light snow':
+		case 'Light shower sleet':
+		case 'Light rain and snow':
+		case 'Light shower snow':
+			return `<img class="icon" src="./icons/iconfinder_weather11_4102327.png">`;
+		case 'snow':
+		case 'Snow':
+		case 'Shower sleet':
+		case 'Shower snow':
+			return `<img class="icon" src="./icons/iconfinder_weather12_4102322.png">`;
+		case 'Heavy snow':
+		case 'Heavy shower snow':
+		case 'Sleet':
+		case 'Rain and snow':
+			return `<img class="icon" src="./icons/iconfinder_weather13_4102323.png">`;
+		// Atmospheric - only description
+		case 'mist':
+		case 'Smoke':
+		case 'Haze':
+		case 'sand/ dust whirls':
+		case 'fog':
+		case 'sand':
+		case 'dust':
+		case 'volcanic ash':
+		case 'squalls':
+		case 'tornado':
+		default:
+			return description;
+	}
 }
 
 function displayTab(i){
