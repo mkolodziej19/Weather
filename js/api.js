@@ -141,11 +141,14 @@ async function getCity(e){
 		if(selectedCities.length > 1)
 			selectedCities[0] = [selectedCities[selectedCities.length - 1], selectedCities[selectedCities.length - 1] = selectedCities[0]][0];
 	});
-	displayData();
+	const wrapper = document.querySelector('.slider-wrapper');
+	wrapper.innerHTML = '<div class="slider"></div>';
+	for(let i = 0; i < selectedCities.length; ++i)
+		displayTab(i);
+	makeSlider();
 	searchInput.value = '';
 	li = suggestions.querySelectorAll('li');
 	li.forEach(item => suggestions.removeChild(item));
-
 }
 
 function getWeekDay(d){
@@ -189,10 +192,10 @@ function getTemp(value,degrees){
 }
 
 function getIcon(){
-	return `<i class="fas fa-sun"></i>`
+	return `<img src='icons/sun.svg' width="40px" height="40px"></img>`
 }
 
-function displayData(){
+function displayTab(i){
 	const box = document.createElement('div');
 	box.setAttribute('class', 'weather-box');
 	box.innerHTML = `
@@ -201,38 +204,38 @@ function displayData(){
 			<div class="cross">
 			</div>
 			<div class="city">
-				<span><i class="fas fa-map-marker-alt"></i> <span class='city-name'>${selectedCities[0].city}</span></span>
+				<span><i class="fas fa-map-marker-alt"></i> <span class='city-name'>${selectedCities[i].city}</span></span>
 			</div>
 			<div class="temp">
-				<div class="current">${getTemp(selectedCities[0].currData.temp, 'C')}</div>
-				<div class="minmax">${getIcon(selectedCities[0].currData.cloud)} <span>${getTemp(selectedCities[0].currData.min, 'C')}</span><span>${getTemp(selectedCities[0].currData.max, 'C')}</span></div>
+				<div class="current">${getTemp(selectedCities[i].currData.temp, 'C')}</div>
+				<div class="minmax">${getIcon(selectedCities[i].currData.cloud)} <span>${getTemp(selectedCities[i].currData.min, 'C')}</span><span>${getTemp(selectedCities[i].currData.max, 'C')}</span></div>
 			</div>
 		</div>
 		<div class="bottom">
 			<span class="more">
-				<span>${selectedCities[0].currData.pres} hPa</span>
-				<span><i class="fas fa-wind"></i> ${selectedCities[0].currData.wind}</span>
+				<span>${selectedCities[i].currData.pres} hPa</span>
+				<span><i class="fas fa-wind"></i> ${selectedCities[i].currData.wind}</span>
 			</span>
 			<span class="forecast">
 				<div>
-					<span>${getIcon(selectedCities[0].forecastData.day1[2])}</span>
-					<span>${getWeekDay(selectedCities[0].forecastData.day1[0])}</span>
-					<span>${getTemp(selectedCities[0].forecastData.day1[1], 'C')}</span>
+					<span>${getIcon(selectedCities[i].forecastData.day1[2])}</span>
+					<span>${getWeekDay(selectedCities[i].forecastData.day1[0])}</span>
+					<span>${getTemp(selectedCities[i].forecastData.day1[1], 'C')}</span>
 				</div>
 				<div>
-					<span>${getIcon(selectedCities[0].forecastData.day2[2])}</span>
-					<span>${getWeekDay(selectedCities[0].forecastData.day2[0])}</span>
-					<span>${getTemp(selectedCities[0].forecastData.day2[1], 'C')}</span>
+					<span>${getIcon(selectedCities[i].forecastData.day2[2])}</span>
+					<span>${getWeekDay(selectedCities[i].forecastData.day2[0])}</span>
+					<span>${getTemp(selectedCities[i].forecastData.day2[1], 'C')}</span>
 				</div>
 				<div>
-					<span>${getIcon(selectedCities[0].forecastData.day3[2])}</span>
-					<span>${getWeekDay(selectedCities[0].forecastData.day3[0])}</span>
-					<span>${getTemp(selectedCities[0].forecastData.day3[1], 'C')}</span>
+					<span>${getIcon(selectedCities[i].forecastData.day3[2])}</span>
+					<span>${getWeekDay(selectedCities[i].forecastData.day3[0])}</span>
+					<span>${getTemp(selectedCities[i].forecastData.day3[1], 'C')}</span>
 				</div>
 				<div>
-					<span>${getIcon(selectedCities[0].forecastData.day4[2])}</span>
-					<span>${getWeekDay(selectedCities[0].forecastData.day4[0])}</span>
-					<span>${getTemp(selectedCities[0].forecastData.day4[1], 'C')}</span>
+					<span>${getIcon(selectedCities[i].forecastData.day4[2])}</span>
+					<span>${getWeekDay(selectedCities[i].forecastData.day4[0])}</span>
+					<span>${getTemp(selectedCities[i].forecastData.day4[1], 'C')}</span>
 				</div>
 			</span>
 		</div>
@@ -244,8 +247,20 @@ function displayData(){
 	cross.addEventListener('click', (e) => {
 		const tab = e.target.parentNode.parentNode;
 		const name = tab.querySelector('.city-name').innerText;
-		tab.parentNode.removeChild(tab);
 		selectedCities = selectedCities.filter(obj => obj.city !== name)
-		console.log(selectedCities);
+		const wrapper = document.querySelector('.slider-wrapper');
+		wrapper.innerHTML = '<div class="slider"></div>';
+		for(let i = 0; i < selectedCities.length; ++i)
+			displayTab(i);
+		makeSlider();
+	});
+}
+function makeSlider(){
+	$(document).ready(function(){
+		$('.slider').slick({
+			centerMode: true,
+			centerPadding: '150px',
+			slidesToShow: 1,
+		});
 	});
 }
