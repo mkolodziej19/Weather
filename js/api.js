@@ -328,15 +328,15 @@ function displayTab(i){
 	
 	`
 	if(selectedCities[i].city === 'Warsaw')
-		box.style.backgroundImage = 'url(/img/warszawa.jpg)';
+		box.style.backgroundImage = 'url(img/warszawa.jpg)';
 	if(selectedCities[i].city === 'Wroclaw')
-		box.style.backgroundImage = 'url(/img/wroclaw.jpg)';
+		box.style.backgroundImage = 'url(img/wroclaw.jpg)';
 	if(selectedCities[i].city === 'Krakow')
-		box.style.backgroundImage = 'url(/img/krakow.jpg)';
+		box.style.backgroundImage = 'url(img/krakow.jpg)';
 	if(selectedCities[i].city === 'Gdańsk')
-		box.style.backgroundImage = 'url(/img/gdansk.jpg)';
+		box.style.backgroundImage = 'url(img/gdansk.jpg)';
 	if(selectedCities[i].city === 'Poznań')
-		box.style.backgroundImage = 'url(/img/poznan.jpg)';
+		box.style.backgroundImage = 'url(img/poznan.jpg)';
 	const slider = document.querySelector('.slider');
 	slider.appendChild(box);
 	const cross = box.querySelector('.cross');
