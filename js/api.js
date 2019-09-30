@@ -152,35 +152,15 @@ async function getCity(e){
 }
 
 function getWeekDay(d){
-	const year = [d[0], d[1], d[2], d[3]].join('');
-	const month = [d[5], d[6]].join('');
-	const day = [d[8], d[9]].join('');
-
+	const year = parseInt([d[0], d[1], d[2], d[3]].join(''));
+	const month = parseInt([d[5], d[6]].join('')) - 1;
+	const day = parseInt([d[8], d[9]].join(''))
 	const date = new Date(year, month, day);
 	let dayOfWeek = date.getDay();
-	if (dayOfWeek===0) {
-		dayOfWeek=6
-	} else {
-		dayOfWeek-=1;
-	}
-	switch(dayOfWeek){
-		case 0: 
-			return 'Sun';
-		case 1:
-			return 'Mon';
-		case 2:
-			return 'Tue';
-		case 3:
-			return 'Wed';
-		case 4:
-			return 'Thu';
-		case 5:
-			return 'Fri';
-		case 6:
-			return 'Sat';
-		default:
-			console.log('Wrong date argument');
-	};
+
+	console.log(date);
+	const dayTab = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	return dayTab[dayOfWeek];
 }
 
 function getTemp(value,degrees){
@@ -351,6 +331,7 @@ function displayTab(i){
 		makeSlider();
 	});
 }
+
 function makeSlider(){
 	$(document).ready(function(){
 		$('.slider').slick({
